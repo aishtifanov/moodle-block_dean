@@ -1,0 +1,137 @@
+
+<form method="post" name="form" enctype="multipart/form-data" action="studycard.php">
+<input type="hidden" name="mode" value="<?php echo $mode ?>" />
+<input type="hidden" name="fid" value="<?php echo $fid ?>" />
+<input type="hidden" name="sid" value="<?php echo $sid ?>" />
+<input type="hidden" name="cid" value="<?php echo $cid ?>" />
+<input type="hidden" name="gid" value="<?php echo $gid ?>" />
+<input type="hidden" name="uid" value="<?php echo $uid ?>" />
+
+<table class="formtable">
+<tr>
+    <th><?php print_string("ffaculty", "block_dean") ?>:</th>
+    <td><?php p($faculty->name) ?> </td>
+</tr>
+<tr>
+    <th><?php print_string("sspeciality", "block_dean") ?>:</th>
+    <td><?php p($speciality->name) ?> </td>
+</tr>
+<tr>
+    <th><?php print_string("qualification", "block_dean") ?>:</th>
+    <td><?php p($speciality->qualification) ?>
+	<?php
+	/*
+    <input type="text" name="qualification" size="50" alt="<?php print_string("qualification", "block_dean") ?>" maxlength="100" value="<?php p($speciality->qualification) ?>" />
+    <?php if (isset($err["email"])) formerr($err["email"]); ?>
+	*/
+	?>
+
+    </td>
+</tr>
+<tr>
+    <th><?php print_string("lastname") ?>:</th>
+    <td><?php p($user->lastname) ?></td>
+</tr>
+<tr>
+    <th><?php print_string("firstname"); echo ' '; print_string("surname", "block_dean");  ?>:</th>
+    <td> <?php p($user->firstname) ?></td>
+</tr>
+<tr>
+    <th><?php print_string("recordbook", "block_dean") ?>:</th>
+    <td>
+    <input type="text" name="recordbook" size="15" alt="<?php print_string("recordbook", "block_dean") ?>" maxlength="100" value="<?php p($user_student->recordbook) ?>" />
+    <?php if (isset($err["recordbook"])) formerr($err["recordbook																									"]); ?>
+    </td>
+</tr>
+<tr>
+    <th><?php print_string("birthday", "block_dean") ?>:</th>
+    <td>
+		<?php print_date_selector("sday", "smonth", "syear", $user_student->birthday); ?>
+    </td>
+</tr>
+<tr>
+    <th><?php print_string("whatgraduated", "block_dean") ?>:</th>
+    <td>
+    <input type="text" name="whatgraduated" size="70" alt="<?php print_string("whatgraduated", "block_dean") ?>" maxlength="100" value="<?php p($user_student->whatgraduated) ?>" />
+	<?php if (isset($err["whatgraduated"])) formerr($err["whatgraduated"]); ?>
+    </td>
+</tr>
+<tr>
+    <th><?php print_string("previousdiploma", "block_dean") ?>:</th>
+    <td>
+    <input type="text" name="previousdiploma" size="50" alt="<?php print_string("previousdiploma", "block_dean") ?>" maxlength="100" value="<?php p($user_student->previousdiploma) ?>" />
+    </td>
+</tr>
+<tr>
+    <th><?php print_string("issueday", "block_dean") ?>:</th>
+    <td>
+		<?php print_date_selector("iday", "imonth", "iyear", $user_student->issueday); ?>
+    </td>
+</tr>
+<tr>
+    <th><?php print_string("job", "block_dean") ?>:</th>
+    <td>
+    <input type="text" name="job" size="50" alt="<?php print_string("job", "block_dean") ?>" maxlength="100" value="<?php p($user_student->job) ?>" />
+    </td>
+</tr>
+<tr>
+    <th><?php print_string("appointment", "block_dean") ?>:</th>
+    <td>
+    <input type="text" name="appointment" size="50" alt="<?php print_string("appointment", "block_dean") ?>" maxlength="100" value="<?php p($user_student->appointment) ?>" />
+    </td>
+</tr>
+<tr>
+    <th><?php print_string("ordernumber", "block_dean") ?>:</th>
+    <td>
+    <input type="text" name="ordernumber" size="50" alt="<?php print_string("ordernumber", "block_dean") ?>" maxlength="100" value="<?php p($user_student->ordernumber) ?>" />
+	<?php if (isset($err["ordernumber"])) formerr($err["ordernumber"]); ?>
+    </td>
+</tr>
+<tr>
+    <th><?php print_string("enrolmenttype", "block_dean") ?>:</th>
+    <td> <span class="radiogroup enrolmenttype"\>
+		<?php
+		if ($user_student->enrolmenttype == 10)  {
+			echo '<input type="radio" value="V1" name="R1"  checked >' . get_string("enrol1", "block_dean") . '<br>';
+		}
+		else  {
+			echo '<input type="radio" value="V1" name="R1" >' . get_string("enrol1", "block_dean") . '<br>';
+		}
+
+		if ($user_student->enrolmenttype == 11)  {
+			echo '<input type="radio" value="V2" name="R1" checked >'. get_string("enrol2", "block_dean") . '<br>';
+		}
+		else 	{
+			echo '<input type="radio" value="V2" name="R1">'. get_string("enrol2", "block_dean") . '<br>';
+		}
+		if ($user_student->enrolmenttype <= 6)  {
+			echo '<input type="radio" value="V3" name="R1" checked>на &nbsp;';
+		}
+		else 	{
+			echo '<input type="radio" value="V3" name="R1">на &nbsp;';
+		}
+		unset($choices);
+	    $choices = array('1', '2', '3', '4', '5', '6');
+		choose_from_menu ($choices, "typeenrolment", $user_student->enrolmenttype, "");
+		echo '&nbsp;';
+		print_string("enrol3", "block_dean");
+	   ?>
+    </td>
+</tr>
+<tr>
+    <th><?php print_string("financialbasis", "block_dean") ?>:</th>
+    <td><?php
+    unset($choices);
+    $choices["fb"] = get_string("fb", "block_dean");
+    $choices["fd"] = get_string("fd", "block_dean");
+    choose_from_menu ($choices, "financialbasis", $user_student->financialbasis, "") ?>
+    </td>
+</tr>
+
+<tr>
+    <td colspan="2" style="text-align: center;"><input type="submit" value="<?php print_string("updatemyprofile") ?>" /></td>
+</tr>
+
+</table>
+<input type="hidden" name="id" value="<?php p($user->id) ?>" />
+</form>

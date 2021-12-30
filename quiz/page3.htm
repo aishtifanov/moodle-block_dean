@@ -1,0 +1,77 @@
+﻿<?php
+	if($courses = get_records_select('dean_course_discipline', "disciplineid=$id AND departmentid=$headdepartment_is AND specialityid=$sid", '', 'id, courseid')) {
+		foreach ($courses as $data) $idcourseselect[] = $data->courseid;
+		$idcourseselect = implode(',', $idcourseselect);
+	} else $idcourseselect = '0';
+
+$disciplines = get_records_select('course', "id NOT IN ($idcourseselect)", 'fullname', 'id, fullname');
+	if($courses) {
+		$coursecount = count($courses);
+	} else $coursecount = 0;
+	$allcoursecount = count($disciplines);
+?>
+<form name="form" id="form" method="post" action="index.php">
+
+</div>
+  <table align="center" border="0" cellpadding="5" cellspacing="0">
+    <tr>
+      <td valign="top">
+          <?php
+              echo get_string('courses') . ' (' . $coursecount . ')';
+          ?>
+      </td>
+      <td></td>
+      <td valign="top">
+          <?php
+              echo 'Потенциальные курсы' . ' (' . $allcoursecount . ')';
+          ?>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top">
+          <select name="removeselect[]" size="20" id="removeselect"
+                  onFocus="document.methodistsform.add.disabled=true;
+                           document.methodistsform.remove.disabled=false;
+                           document.methodistsform.addselect.selectedIndex=-1;" />
+          <?php
+		  	  if ($courses)		{
+	              foreach ($courses as $data) {
+ 	                $course = get_record_select('course', "id=$data->courseid", 'id, fullname');
+  	                echo "<option value=\"$course->id\">".$course->fullname."</option>\n";
+   		           }
+              }
+          ?>
+
+          </select></td>
+      <td valign="top">
+        <br />
+        <input name="add" type="submit" id="add" value="&larr;" />
+        <br />
+        <input name="remove" type="submit" id="remove" value="&rarr;" />
+        <br />
+      </td>
+      <td valign="top">
+          <select name="addselect[]" size="20" id="addselect"
+                  onFocus="document.methodistsform.add.disabled=false;
+                           document.methodistsform.remove.disabled=true;
+                           document.methodistsform.removeselect.selectedIndex=-1;">
+          <?php
+			if($disciplines)
+				foreach ($disciplines as $data) {
+					echo "<option value=\"$data->id\">".$data->fullname."</option>\n";
+				}
+          ?>
+         </select>
+
+       </td>
+    </tr>
+  </table>
+<?php
+	echo'	<input type="hidden" name="id" value="'.$id.'" />
+			<input type="hidden" name="cl" value="'.$createlink.'" />
+			<input type="hidden" name="sid" value="'.$sid.'" />
+			<input type="hidden" name="subid" value="'.$subid.'" />
+			<input type="hidden" name="ct" value="'.$currenttab.'" />
+			<input type="hidden" name="cid" value="'.$cid.'" /></center>';
+?>
+</form>

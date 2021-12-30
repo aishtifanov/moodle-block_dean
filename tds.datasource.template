@@ -1,0 +1,9 @@
+[S28-Server]
+Driver = FreeTDS
+Description = DataWarehouse database
+Trace = No
+Server = s28.bsu.edu.ru
+Port = 1433
+Database = DataWarehouse
+Charset = WINDOWS-1251
+tds.datasource.template
