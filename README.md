@@ -20,7 +20,7 @@
 
 
 ## Внешний вид 
-
+https://github.com/aishtifanov/moodle-block_dean/blob/master/docs/screenshots.pdf
 
 ## Минимальные требования
 LMS MOODLE 1.9
